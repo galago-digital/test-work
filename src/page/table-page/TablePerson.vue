@@ -65,6 +65,7 @@ export default {
       {text: 'Дата рождения', value: 'date'},
       {text: 'Дистанции забега (км)', value: 'distance'},
       {text: 'Дата регистрации', value: 'dateRegistration'},
+      {text: 'Email', value: 'email'},
       {text: 'Телефон', value: 'phone'},
       {text: 'Сумма (р)', value: 'payment'},
       {text: 'Actions', value: 'actions', sortable: false},
