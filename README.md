@@ -1,24 +1,14 @@
-# test-work
+## В json внес изменения 
+```
+Добавил поле dateRegistration
+И привел дату к стандартному варианту
+```
+## Мелочи
+```
+Но не учел всякие мелочи и все чтобы бы я доделал бы отписал, прощу не судить строго)
 
-## Project setup
-```
-npm install
-```
+Также разбил на два компанента форму создания и таблицу, чтобы можно было редактировать и было красиво
 
-### Compiles and hot-reloads for development
+Также полностью для scr отключил eslinter, желания настраивать его не было. Поэтому он пошел в топку,
+и в тз ничего не сказано про eslinter
 ```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
