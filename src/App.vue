@@ -15,6 +15,7 @@ export default {
     NavBar,
   },
   methods: mapActions(['getAllPerson']),
+  // нет смысла в async если не дожидаться resolve getAllPerson
   async mounted() {
     this.getAllPerson()
   }

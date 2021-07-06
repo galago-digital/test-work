@@ -130,7 +130,9 @@ import { mapActions, mapGetters } from 'vuex';
 // по хорошему нужно было вынести в отдельный файл
 // также вынес все бы все инпуты, селект DP в отдыльный компонент
 // сейчас компонент и его нужно поразбивать
-const STATECREATENEWPERSON = 'create';
+
+// нечитаемо же, STATE_CREATE_NEW_PERSON - так лучше
+const STATECREATENEWPERSON = 'create'; // нечитаемо же
 const STATEEDITPERSON = 'edit';
 
 export default {
@@ -142,6 +144,9 @@ export default {
     stateForm: STATECREATENEWPERSON,
 
     name: '',
+    // nameRules, phoneRules, etc -
+    // не имеют отношения к состоянию комопннета,
+    // поэтому не нужно хранить их в data
     nameRules: [
       v => !!v || 'Обязательное поле',
     ],
@@ -175,6 +180,8 @@ export default {
   computed: mapGetters(['postAllPerson']),
   methods: {
     save(date) {
+      // рабочий вариант, но луше использовать события
+      // или раз уже есть vuex - actions
       this.$refs.menu.save(date);
     },
     saveNewPerson() {
@@ -182,6 +189,9 @@ export default {
         return false;
       }
 
+      // раз используется vuex и в нем храниться состояние
+      // логичнее не раздувать компонент, а вынести создание пользователся в actions
+      // так же и редактирование пользователя
       const person = {
         date: this.date,
         name: this.name,
@@ -194,6 +204,9 @@ export default {
 
       if (this.stateForm === STATECREATENEWPERSON) {
         let newId = 1;
+        // десьруктуризация сокращает в такиз случаях кол и его удобнее читать
+        // const { users } = this.postAllPerson;
+        // if (users.length) ... 
         if (this.postAllPerson.users.length !== 0) {
           newId = this.postAllPerson.users[this.postAllPerson.users.length - 1].id + 1;
         }
@@ -205,6 +218,10 @@ export default {
       }
 
       this.exitPage();
+      // чтобы вот это все не повторять
+      // начальное состояние можно вынести в константу
+      // и здесь просто заменить значения объекта.
+      // Плохо что меняются типы, например date: null -> this.date = ''
       setTimeout(() => {
         this.date = '';
         this.name = '';
@@ -218,6 +235,8 @@ export default {
     exitPage() {
       this.$router.push({ name: 'table' });
     },
+    // достаточно один раз ...mapActions(['addNewPerson', 'editPerson'])
+    // чтоб избмежать проблем если уж есть модули нужно использовать пространство имен
     ...mapActions(['editPerson']),
     ...mapActions(['addNewPerson']),
   },
@@ -235,7 +254,10 @@ export default {
       if (to.params.user) {
         vm.namePage = 'Редактирование пользователя';
         vm.stateForm = STATEEDITPERSON;
-
+        // Если передать в маршруте id
+        // потом можно получить данные пользоватля из store
+        // и избежать всех этих строк
+        // А состояние хранить в store, а не в маршруте.
         vm.id = to.params.user.id;
         vm.name = to.params.user.name;
         vm.distance = to.params.user.distance;
